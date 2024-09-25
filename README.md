@@ -58,6 +58,7 @@ To get started with this project, follow these steps:
 
 6. **Seed the database (optional)**:
 
+    (First create at least one Seller)
     You can seed the database with sample data by running:
 
     ```bash
