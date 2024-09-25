@@ -83,10 +83,13 @@ To get started with this project, follow these steps:
   - Purchase products available in the vending machine.
   - You can log out of all sessions when you are logged in on multiple devices.
 
-- **For Sellers**: 
+- **For Sellers**:
   - Add new products to your inventory.
   - Edit existing products or remove them as needed.
-  - View your added products and their status.
+  - View your added products
+    AND
+  - Deposit money to your account.
+  - Purchase products available in the vending machine.
 
 
 
