@@ -74,14 +74,6 @@ class ProductController extends Controller
             'cost' => 'required|numeric',
         ]);
 
-        $existingProduct = Product::where('productName',$validated['productName'])
-        ->where('sellerId',$user->id)
-        ->first();
-
-        if ($existingProduct) {
-            return redirect()->back()->with('alert', 'A product with this name already exists.');
-        }
-    
         $product = Product::findOrFail($id);
         $product->update($validated);
     

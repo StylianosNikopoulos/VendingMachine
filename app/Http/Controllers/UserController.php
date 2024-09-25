@@ -118,7 +118,7 @@ class UserController extends Controller
     }
 
     //Calculates the change
-    private function calculateChange($amount){
+    public function calculateChange($amount){
         $coins = [100, 50, 20, 10, 5];
         $change = [];
 

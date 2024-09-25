@@ -11,25 +11,25 @@ Route::post('/user', [UserController::class, 'store']);
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {
     // Routes for user
-    Route::get('/user', [UserController::class, 'index']); 
-    Route::get('/user/{id}', [UserController::class, 'show']); 
-    Route::put('/user/{id}', [UserController::class, 'update']); 
-    Route::delete('/user/{id}', [UserController::class, 'destroy']); 
+    Route::get('/user', [UserController::class, 'index'])->name('showUsers'); 
+    Route::get('/user/{id}', [UserController::class, 'show'])->name('showAnUser'); 
+    Route::put('/user/{id}', [UserController::class, 'update'])->name('updateUser'); 
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('deleteUser'); 
     
     // Routes for deposit amount
-    Route::post('/deposit', [UserController::class, 'deposit']); 
-    Route::get('/user-amount', [UserController::class, 'getUserAmount']); 
-    Route::post('/reset', [UserController::class, 'resetDeposit']);
+    Route::post('/deposit', [UserController::class, 'deposit'])->name('deposit'); 
+    Route::get('/user-amount', [UserController::class, 'getUserAmount'])->name('user-amount'); 
+    Route::post('/reset', [UserController::class, 'resetDeposit'])->name('reset');  
     
     // Routes for products
-    Route::post('/product', [ProductController::class, 'store']); 
-    Route::put('/product/{id}', [ProductController::class, 'update']); 
-    Route::delete('/product/{id}', [ProductController::class, 'destroy']); 
+    Route::post('/product', [ProductController::class, 'store'])->name('addProduct');
+    Route::put('/product/{id}', [ProductController::class, 'update'])->name('updateProduct'); 
+    Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('deleteProduct'); 
 });
 
 // Public routes for products
-Route::get('/products', [ProductController::class, 'index']); 
-Route::get('/products/{id}', [ProductController::class, 'show']); 
+Route::get('/products', [ProductController::class, 'index'])->name('showProducts'); 
+Route::get('/products/{id}', [ProductController::class, 'show'])->name('showAProduct');
 
 
 
