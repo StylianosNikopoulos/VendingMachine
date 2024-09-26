@@ -7,7 +7,7 @@ This is a **Vending Machine** application built with **Laravel**.The application
 ## Features
 
 - **User Authentication**: Users can register, log in, and manage their sessions.
-- **Deposit Management**: Users can deposit money into their accounts.
+- **Deposit Management**: Buyers can deposit money into their accounts.
 - **Product Management**: Sellers can add, edit, and remove products.
 
 ## Technologies Used
