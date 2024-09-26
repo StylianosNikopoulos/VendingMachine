@@ -1,45 +1,122 @@
 @extends('layouts.mylayout')
 
 @section('content')
-<main class="flex-grow flex flex-col items-center justify-center container mx-auto px-4 lg:px-8 py-10">
-    <h2 class="text-center text-2xl font-bold">Edit Product</h2>
-    
-    @if(session('status') || session('alert'))
-    <div class="mt-4 {{ session('status') ? 'text-green-600' : 'text-red-600' }} transition-all duration-300">
-        {{ session('status') ?? session('alert') }}
+<main class="content-wrapper">
+    <div class="form-container">
+        <h2 class="form-title">Edit Product</h2>
+
+        @if(session('status') || session('alert'))
+        <div class="status-message {{ session('status') ? 'status-success' : 'status-error' }}">
+            {{ session('status') ?? session('alert') }}
+        </div>
+        @endif
+
+        <form action="{{ route('Sellers.updateproducts', $product->id) }}" method="POST">
+            @csrf
+            
+            <div class="form-group">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" name="productName" id="productName" value="{{ old('productName', $product->productName) }}" required class="form-input" placeholder="Enter product name">
+            </div>
+
+            <div class="form-group">
+                <label for="amountAvailable" class="form-label">Amount Available</label>
+                <input type="number" name="amountAvailable" id="amountAvailable" value="{{ old('amountAvailable', $product->amountAvailable) }}" required class="form-input" placeholder="Enter amount available">
+            </div>
+
+            <div class="form-group">
+                <label for="cost" class="form-label">Cost (in cents)</label>
+                <input type="number" name="cost" id="cost" value="{{ old('cost', $product->cost) }}" required class="form-input" placeholder="Enter product cost">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="form-button">Confirm</button>
+            </div>
+        </form>
     </div>
-    @endif
-
-    @if(session('alert'))
-        <div class="mt-4 text-red-600">
-            {{ session('alert') }}
-        </div>
-    @endif
-    
-    <form action="{{ route('Sellers.updateproducts', $product->id) }}" method="POST" class="mt-6 w-full max-w-md">
-        @csrf
-        
-        <div class="mb-4">
-            <label for="productName" class="block text-sm font-medium text-gray-700">Product Name</label>
-            <input type="text" name="productName" id="productName" value="{{ old('productName', $product->productName) }}" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter product name">
-        </div>
-
-        <div class="mb-4">
-            <label for="amountAvailable" class="block text-sm font-medium text-gray-700">Amount Available</label>
-            <input type="number" name="amountAvailable" id="amountAvailable" value="{{ old('amountAvailable', $product->amountAvailable) }}" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter amount available">
-        </div>
-
-        <div class="mb-4">
-            <label for="cost" class="block text-sm font-medium text-gray-700">Cost (in cents)</label>
-            <input type="number" name="cost" id="cost" value="{{ old('cost', $product->cost) }}" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="Enter product cost">
-        </div>
-
-        <div class="mt-6">
-            <button type="submit" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Confirm
-            </button>
-        </div>
-        
-    </form>
 </main>
 @endsection
+
+<style>
+    .content-wrapper {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        padding: 40px 20px;
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+        border: 1px solid #e5e7eb;
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 24px;
+    }
+
+    .status-message {
+        margin-top: 16px;
+        padding: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .status-success {
+        color: #16a34a; 
+    }
+
+    .status-error {
+        color: #dc2626; 
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        margin-top: 4px;
+        outline: none;
+        font-size: 1rem;
+    }
+
+    .form-input:focus {
+        border-color: #6366f1; 
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+
+    .form-button {
+        width: 100%;
+        padding: 12px;
+        background-color: #2563eb;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .form-button:hover {
+        background-color: #1d4ed8;
+    }
+</style>

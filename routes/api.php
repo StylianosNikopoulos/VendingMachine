@@ -6,7 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 
 //Public route create user
-Route::post('/user', [UserController::class, 'store']); 
+Route::post('/user', [UserController::class, 'store'])->name('createUser'); 
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {

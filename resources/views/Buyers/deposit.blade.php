@@ -1,20 +1,20 @@
 @extends('layouts.mylayout')
 
 @section('content')
-<main class="flex-grow flex flex-col items-center justify-center container mx-auto px-4 lg:px-8 py-10">
-    <h2 class="text-center text-2xl font-bold">Deposit Coins</h2>
+<main class="content-wrapper">
+    <h2 class="page-title">Deposit Coins</h2>
     
     @if(session('status') || session('alert'))
-    <div class="mt-4 {{ session('status') ? 'text-green-600' : 'text-red-600' }} transition-all duration-300">
+    <div class="status-message {{ session('status') ? 'status-success' : 'status-error' }}">
         {{ session('status') ?? session('alert') }}
     </div>
     @endif
     
-    <form action="{{ route('deposit') }}" method="POST" class="mt-6 w-full max-w-md">
+    <form action="{{ route('deposit') }}" method="POST" class="form-container">
         @csrf
         
-        <label for="amount" class="block text-sm font-medium text-gray-700">Select Amount</label>
-        <select name="amount" id="amount" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <label for="amount" class="form-label">Select Amount</label>
+        <select name="amount" id="amount" required class="form-select">
             <option value="" disabled selected>Select a coin</option>
             <option value="5">5 cents</option>
             <option value="10">10 cents</option>
@@ -23,13 +23,105 @@
             <option value="100">100 cents</option>
         </select>
 
-        <p class="mt-4">Your Total Amount: {{ $user->deposit }} cents</p>
+        <p class="total-amount">Your Total Amount: {{ $user->deposit }} cents</p>
 
-        <div class="mt-6">
-            <button type="submit" class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-                Deposit
-            </button>
+        <div class="form-group">
+            <button type="submit" class="form-button">Deposit</button>
         </div>
     </form>
 </main>
 @endsection
+
+<style>
+    .content-wrapper {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        padding: 40px 20px;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 1.75rem;
+        font-weight: bold;
+        margin-bottom: 24px;
+        color: #1a202c;
+    }
+
+    .status-message {
+        margin-top: 16px;
+        padding: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .status-success {
+        color: #16a34a; 
+    }
+
+    .status-error {
+        color: #dc2626; 
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        margin-top: 4px;
+        outline: none;
+        font-size: 1rem;
+        appearance: none;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-select:focus {
+        border-color: #6366f1; 
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+
+    .total-amount {
+        margin-top: 16px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #4b5563; 
+    }
+
+    .form-group {
+        margin-top: 24px;
+    }
+
+    .form-button {
+        width: 100%;
+        padding: 12px;
+        background-color: #16a34a; 
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        text-align: center;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .form-button:hover {
+        background-color: #15803d; 
+    }
+</style>

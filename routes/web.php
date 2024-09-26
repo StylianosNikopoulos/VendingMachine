@@ -27,7 +27,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/buy', [UserController::class, 'buyProducts'])->name('Buyers.buyproducts');
     Route::post('/buy', [UserController::class, 'buy'])->name('buy');
 
-    // Product-related routes
+    //See other products 
+    Route::get('/buy', [UserController::class, 'otherProducts'])->name('Sellers.otherProducts');
+
+
+    // Product routes
     Route::get('/product', [ProductController::class, 'create'])->name('Sellers.addproducts'); 
     Route::post('/product', [ProductController::class, 'store']); 
     Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('Sellers.editproducts'); 

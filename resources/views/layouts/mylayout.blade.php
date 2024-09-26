@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-       body {
+        body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
@@ -43,7 +43,7 @@
         .welcome-message {
             font-size: 1.25rem;
             font-weight: bold;
-            color: #1a202c; 
+            color: #1a202c;
         }
 
         .btn-logout {
@@ -54,6 +54,51 @@
             background-color: #c53030; 
         }
 
+        /* Button Styles */
+        .btn {
+            padding: 0.5rem 1rem;
+            color: white;
+            border-radius: 0.375rem;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn-blue {
+            background-color: #2563eb; 
+        }
+
+        .btn-blue:hover {
+            background-color: #1d4ed8; 
+        }
+
+        .btn-red {
+            background-color: #e53e3e;
+        }
+
+        .btn-red:hover {
+            background-color: #c53030; 
+        }
+
+        .bg-blue {
+            background-color: #2563eb;
+        }
+
+        .bg-blue:hover {
+            background-color: #1d4ed8;
+        }
+
+        .bg-red {
+            background-color: #e53e3e;
+        }
+
+        .bg-red:hover {
+            background-color: #c53030;
+        }
+
+        .transition {
+            transition: background-color 0.3s ease;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 flex flex-col min-h-screen">
@@ -68,11 +113,12 @@
                         <a href="{{ route('Sellers.myproducts') }}">My Products</a>
                     @endif
                 </div>
-                @auth
+                @if (Auth::user() && Auth::user()->role == 'buyer')
                 <div class="mt-4 p-2 bg-gray-100 border rounded-lg shadow">
                     <p class="text-gray-700 font-semibold">Your Total Amount: {{ Auth::user()->deposit }} cents</p>
                 </div>
-                 @endauth
+                @endif
+
 
                 <div>
                     @if (Route::has('login'))
@@ -80,27 +126,22 @@
                             @auth
                                 <h2 class="welcome-message">Welcome, {{ Auth::user()->name }}</h2>
 
-
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300">Logout</button>
+                                    <button type="submit" class="btn btn-blue transition">Logout</button>
                                 </form>
-                    @else
-                                <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Login</a>
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-blue transition">Login</a>
                                 @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">Register</a>
-                                @endif            
+                                    <a href="{{ route('register') }}" class="btn btn-blue transition">Register</a>
+                                @endif
                             @endauth
                             @auth
                             <form method="POST" action="{{ route('logout.all') }}">
                                 @csrf
-                                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-                                    Logout from All Devices
-                                </button>
-                            </form>         
+                                <button type="submit" class="btn btn-red transition">Logout from All Devices</button>
+                            </form>
                             @endauth 
-
-
                         </div>
                     @endif
                 </div>

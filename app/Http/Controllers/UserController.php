@@ -64,6 +64,10 @@ class UserController extends Controller
             return response()->json(['message' => 'Unauthenticated'], 401);
         }
 
+        if ($user->role !== 'buyer') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+
         $request->validate([
             'amount' => 'required|numeric|in:5,10,20,50,100',
         ]);
@@ -76,6 +80,11 @@ class UserController extends Controller
 
     public function showDepositForm(){
         $user = Auth::user(); 
+
+        if ($user->role !== 'buyer') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+        $user = Auth::user(); 
         return view('Buyers.deposit',compact('user')); 
     }
 
@@ -84,6 +93,10 @@ class UserController extends Controller
         /** @var User $user */
         $user = Auth::user();
         
+        if ($user->role !== 'buyer') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+    
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'amount' => 'required|numeric|min:1',
@@ -113,6 +126,12 @@ class UserController extends Controller
     }
 
     public function buyProducts() {
+        $user = Auth::user();
+
+        if ($user->role !== 'buyer') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+    
         $products = Product::with('seller')->get(); //Get the sellerId to see who owns the product
         return view('Buyers.buyproducts', compact('products'));
     }
@@ -135,10 +154,26 @@ class UserController extends Controller
     public function resetDeposit(Request $request){
         /** @var User $user */
         $user = Auth::user();
+
+        if ($user->role !== 'buyer') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+        
         $user->deposit = 0; 
         $user->save();
     
         return redirect()->back()->with('status', 'Deposit reset successful');
+    }
+
+    public function otherProducts(){
+        $user = Auth::user();
+
+        if ($user->role !== 'seller') {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+        $products = Product::all();
+
+        return view('Sellers.otherproducts', compact('products'));
     }
 
 }

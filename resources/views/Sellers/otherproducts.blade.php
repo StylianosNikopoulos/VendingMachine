@@ -17,17 +17,6 @@
                 <p>Amount Available: {{ $product->amountAvailable }}</p>
                 <p>Cost: {{ $product->cost }} cents</p>
                 <p>(From User: {{ $product->seller->name }})</p>
-                
-                <form action="{{ route('buy', ['product_id' => $product->id]) }}" method="POST" class="purchase-form">
-                    @csrf
-                    <div class="quantity-group">
-                        <label for="amount_{{ $product->id }}" class="quantity-label">Quantity:</label>
-                        <input type="number" name="amount" id="amount_{{ $product->id }}" min="1" required class="quantity-input" placeholder="1">
-                    </div>
-                    <button type="submit" class="buy-button">
-                        Buy
-                    </button>
-                </form>
             </div>
         @endforeach
     </div>
