@@ -165,6 +165,7 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'Deposit reset successful');
     }
 
+    //Show other products from sellers
     public function otherProducts(){
         $user = Auth::user();
 
