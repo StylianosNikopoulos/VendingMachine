@@ -88,6 +88,7 @@ To get started with this project, follow these steps:
   - Add new products to your inventory.
   - Edit existing products or remove them as needed.
   - View your added products
+  - View all products form vending machine
   - You can log out of all sessions when you are logged in on multiple devices.
 
 
