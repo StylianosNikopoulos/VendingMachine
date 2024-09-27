@@ -22,7 +22,7 @@ To get started with this project, follow these steps:
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/StylianosNikopoulos/vending-machine.git
+    git clone '...' 
     cd vending-machine
     ```
 
