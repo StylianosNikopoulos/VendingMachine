@@ -41,7 +41,7 @@ To get started with this project, follow these steps:
     ```bash
     cp .env.example .env
     ```
-    Also add create .env.testing for testing 
+    Also create .env.testing for testing 
 
 4. **Generate an application key**:
 
