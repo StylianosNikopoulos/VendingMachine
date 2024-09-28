@@ -42,7 +42,7 @@ class UserControllerUnitTest extends TestCase
         $response->assertRedirect('/login'); 
     }
     
-    //Test buy function if unauthenticated user is can buy product
+    //Test buy function if unauthenticated user can buy product
     public function test_unauthenticated_user_cannot_buy()
     {
         $seller = User::factory()->create([
