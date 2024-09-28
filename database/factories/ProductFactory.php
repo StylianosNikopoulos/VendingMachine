@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'productName' => $this->faker->name,
             'amountAvailable' => $this->faker->numberBetween(1, 100),
             'cost' => $this->faker->numberBetween(0, 100), 
-            'sellerId' => User::all()->random()->id, 
+            'sellerId' => User::factory(), 
         ];
     }
 }

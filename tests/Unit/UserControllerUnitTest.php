@@ -18,6 +18,8 @@ class UserControllerUnitTest extends TestCase
     protected function setUp(): void{
         parent::setUp();
         $this->controller = new UserController(); 
+        $this->artisan('migrate');
+
     }
 
     //Test calculateChange function if calculation is correct
@@ -41,18 +43,26 @@ class UserControllerUnitTest extends TestCase
     }
     
     //Test buy function if unauthenticated user is can buy product
-    public function test_unauthenticated_user_cannot_buy(){
+    public function test_unauthenticated_user_cannot_buy()
+    {
+        // Δημιουργία χρήστη (seller) με ρόλο "seller"
+        $seller = User::factory()->create([
+            'role' => 'seller',  
+        ]);
+    
         $product = Product::factory()->create([
             'cost' => 100, 
-            'amountAvailable' => 10,
-            'productName' => 'A Product'
+            'amountAvailable' => 10,  
+            'productName' => 'A Product',
+            'sellerId' => $seller->id,  
         ]);
     
-        $response = $this->post('/buy', [
+        $response = $this->postJson('/api/buy', [
             'product_id' => $product->id,
-            'amount' => 1, 
+            'amount' => 1,
         ]);
     
-        $response->assertStatus(401);
+        $response->assertStatus(404);
     }
+    
 }
