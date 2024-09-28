@@ -45,7 +45,6 @@ class UserControllerUnitTest extends TestCase
     //Test buy function if unauthenticated user is can buy product
     public function test_unauthenticated_user_cannot_buy()
     {
-        // Δημιουργία χρήστη (seller) με ρόλο "seller"
         $seller = User::factory()->create([
             'role' => 'seller',  
         ]);
