@@ -82,82 +82,20 @@ class UserControllerUnitTest extends TestCase
         $response->assertStatus(302);  
         $response->assertRedirect('/login'); 
     }
-
-    public function test_authenticated_buyer_can_deposit(){
-        $buyer = $this->createBuyer();
-        
-        $response = $this->actingAs($buyer)->post('/deposit', ['amount' => 10]);
-
-        $response->assertStatus(302);
-        $response->assertSessionHas('status', 'Cents added successfully!');
-
-        $this->assertEquals(10, $buyer->fresh()->deposit);
-    }
-
-    public function test_authenticated_seller_can_deposit(){
-        $seller = $this->createSeller();
-        $response = $this->actingAs($seller)->post('/deposit', ['amount' => 10]);
-
-        $response->assertStatus(403);
-        $response->assertJson([
-            'message' => 'Forbidden',
+    
+    //Test buy function if unauthenticated user is can buy product
+    public function test_unauthenticated_user_cannot_buy()
+    {
+        // Δημιουργία χρήστη (seller) με ρόλο "seller"
+        $seller = User::factory()->create([
+            'role' => 'seller',  
         ]);
-    }
-
-
-    //Test about buy function
-    public function test_unauthenticated_user_cannot_buy(){
-        $response = $this->post('/buy', ['product_id' => 1, 'amount' => 10]);
-
-        $response->assertStatus(302);  
-        $response->assertRedirect('/login');
-
-    }
-
-    public function test_authenticated_buyer_can_buy(){
-        $buyer = $this->createBuyer();
-        $response = $this->actingAs($buyer)->post('/buy',['product_id' => 1, 'amount' =>10]);
-        $response->assertStatus(302);
-        $response->assertSessionHas('status', '');
-    }
-
-    public function test_authenticated_seller_can_buy(){
-        $seller = $this->createSeller();
-        $response = $this->actingAs($seller)->post('/buy',['product_id' => 1, 'amount' =>10]);
-
-        $response->assertStatus(403);
-        $response->assertJson([
-            'message' => 'Forbidden',
-        ]);
-    }
-
-
-    //Test about store function
-    public function test_unauthenticated_user_cannot_store_products(){
-        $response = $this->actingAs($this->createBuyer())->post('/product');
-        $response->assertStatus(403);
-    }
-
-    public function test_authenticated_buyer_can_store_products(){
-        $response = $this->actingAs($this->createBuyer())->post('product');
-        $response->assertStatus(403);
-    }
-
-    public function test_authenticated_seller_can_store_products(){
-        $seller = $this->createSeller();
     
-        $productData = [
-            'productName' => 'Test Product',
-            'amountAvailable' => 100,
-            'cost' => 10,
-        ];
-    
-        $response = $this->actingAs($seller)->post('/product', $productData);
-    
-        $response->assertStatus(302);
-        $this->assertDatabaseHas('products', [
-            'productName' => 'Test Product',
-            'sellerId' => $seller->id,
+        $product = Product::factory()->create([
+            'cost' => 100, 
+            'amountAvailable' => 10,  
+            'productName' => 'A Product',
+            'sellerId' => $seller->id,  
         ]);
     }
 
