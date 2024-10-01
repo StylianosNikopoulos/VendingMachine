@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/buy', [UserController::class, 'buy'])->name('buy');
 
     //See other products 
-    Route::get('/buy', [UserController::class, 'otherProducts'])->name('Sellers.otherProducts');
+    Route::get('/seller-products', [UserController::class, 'otherProducts'])->name('Sellers.otherProducts');
 
 
     // Product routes
@@ -44,5 +44,3 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     
 });
-
-
