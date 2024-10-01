@@ -17,7 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('deleteUser'); 
     
     // Routes for deposit amount
-    Route::post('/deposit', [UserController::class, 'deposit'])->name('deposit'); 
+    Route::post('/deposit', [UserController::class, 'deposit'])->name('depositAmount'); 
     Route::get('/user-amount', [UserController::class, 'getUserAmount'])->name('user-amount'); 
     Route::post('/reset', [UserController::class, 'resetDeposit'])->name('reset');  
     
