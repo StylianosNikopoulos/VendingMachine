@@ -120,7 +120,7 @@ class UserController extends Controller
         $product->amountAvailable -= $request->amount; 
         $product->save(); 
 
-        $change = $this->calculateChange($user->deposit);
+        // $change = $this->calculateChange($user->deposit);
 
         return redirect()->back()->with('status', 'Purchase successful!'); 
     }
@@ -176,5 +176,25 @@ class UserController extends Controller
 
         return view('Sellers.otherproducts', compact('products'));
     }
+
+
+    public function getUserAmount(){
+    /** @var User $user */
+    $user = Auth::user();
+    
+    if (!$user) {
+        return response()->json(['message' => 'User not authenticated'], 401);
+    }
+    
+    $coins = $this->calculateChange($user->deposit);
+    
+    return response()->json([
+        'message' => 'Buyer amount',
+        'deposit' => $user->deposit,
+        'coins' => $coins 
+    ]);
+    }
+    
+
 
 }
